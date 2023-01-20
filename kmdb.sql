@@ -109,7 +109,7 @@ DROP TABLE IF EXISTS characters;
 
 CREATE TABLE studios (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT
+  studio_name TEXT
 );
 
 CREATE TABLE movies (
@@ -122,8 +122,7 @@ CREATE TABLE movies (
 
 CREATE TABLE actors (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  first_name TEXT,
-  last_name TEXT
+  actor_name TEXT
 );
 
 CREATE TABLE characters (
@@ -135,7 +134,7 @@ CREATE TABLE characters (
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 INSERT INTO studios (
-  name
+  studio_name
 )
 VALUES (
   "Warner Bros."
@@ -151,13 +150,28 @@ VALUES  (
   "Batman Begins",
   "2005",
   "PG-13",
-  (SELECT id from studios WHERE name='Warner Bros.')),
+  (SELECT id from studios WHERE studio_name='Warner Bros.')),
  (
   "The Dark Knight",
   "2008",
   "PG-13",
-  (SELECT id from studios WHERE name='Warner Bros.') 
-);
+  (SELECT id from studios WHERE studio_name='Warner Bros.')),
+ (
+  "The Dark Knight Rises",
+  "2012",
+  "PG-13",
+  (SELECT id from studios WHERE studio_name='Warner Bros.'))  
+;
+
+INSERT INTO actors (
+  actor_name
+)
+VALUES  (
+  "Christian Bale"
+  ),
+  (
+  "Michael Caine"
+  );
 
 -- Prints a header for the movies output
 .print "Movies"
