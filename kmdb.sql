@@ -171,6 +171,33 @@ VALUES  (
   ),
   (
   "Michael Caine"
+  ),
+  (
+  "Aaron Eckhart"
+  ),
+(
+  "Joseph Gordon-Levitt"
+  ),
+  (
+  "Maggie Gyllenhaal"
+  ),
+  (
+  "Tom Hardy"
+  ),
+  (
+  "Anne Hathaway"
+  ),
+  (
+  "Katie Holmes"
+  ),
+  (
+  "Heath Ledger"
+  ),
+  (
+  "Liam Neeson"
+  ),
+  (
+  "Gary Oldman"
   );
 
 -- Prints a header for the movies output
