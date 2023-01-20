@@ -200,6 +200,13 @@ VALUES  (
   "Gary Oldman"
   );
 
+  INSERT INTO characters (
+  character_name,
+  actor_id
+)
+VALUES  (
+    ""
+
 -- Prints a header for the movies output
 .print "Movies"
 .print "======"
