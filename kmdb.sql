@@ -104,6 +104,7 @@ DROP TABLE IF EXISTS studios;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS characters;
 DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS cast;
 
 -- Create new tables, according to your domain model
 
@@ -129,6 +130,12 @@ CREATE TABLE actors (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   actor_name TEXT,
   character_id INTEGER
+);
+
+CREATE TABLE cast (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  movie_id INTEGER,
+  actor_id INTEGER
 );
 
 
@@ -247,6 +254,86 @@ VALUES  (
   (SELECT id from characters WHERE character_name='Commissioner Gordon')
   );
 
+  INSERT INTO cast (
+  movie_id,
+  actor_id
+)
+VALUES  (
+  (SELECT id from movies WHERE title='Batman Begins'),
+  (SELECT id from actors WHERE actor_name='Christian Bale')
+)
+,
+ (
+  (SELECT id from movies WHERE title='Batman Begins'),
+  (SELECT id from actors WHERE actor_name='Michael Caine')
+ )
+  ,
+  (
+  (SELECT id from movies WHERE title='Batman Begins'),
+  (SELECT id from actors WHERE actor_name='Liam Neeson')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='Batman Begins'),
+  (SELECT id from actors WHERE actor_name='Katie Holmes')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='Batman Begins'),
+  (SELECT id from actors WHERE actor_name='Gary Oldman')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight'),
+  (SELECT id from actors WHERE actor_name='Christian Bale')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight'),
+  (SELECT id from actors WHERE actor_name='Heath Ledger')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight'),
+  (SELECT id from actors WHERE actor_name='Aaron Eckhart')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight'),
+  (SELECT id from actors WHERE actor_name='Michael Caine')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight'),
+  (SELECT id from actors WHERE actor_name='Maggie Gyllenhaal')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight Rises'),
+  (SELECT id from actors WHERE actor_name='Christian Bale')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight Rises'),
+  (SELECT id from actors WHERE actor_name='Gary Oldman')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight Rises'),
+  (SELECT id from actors WHERE actor_name='Tom Hardy')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight Rises'),
+  (SELECT id from actors WHERE actor_name='Joseph Gordon-Levitt')
+  )
+  ,
+  (
+  (SELECT id from movies WHERE title='The Dark Knight Rises'),
+  (SELECT id from actors WHERE actor_name='Anne Hathaway')
+)
+  ;
+
 -- Prints a header for the movies output
 .print "Movies"
 .print "======"
@@ -267,4 +354,8 @@ ON movies.studio_id = studios.id
 
 
 -- The SQL statement for the cast output
--- TODO!
+SELECT cast.id, movies.title
+FROM cast
+INNER JOIN movies
+ON cast.movie_id = movies.id
+;
