@@ -102,8 +102,8 @@
 -- Drop existing tables, so you'll start fresh each time this script is run.
 DROP TABLE IF EXISTS studios;
 DROP TABLE IF EXISTS movies;
-DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS characters;
+DROP TABLE IF EXISTS actors;
 
 -- Create new tables, according to your domain model
 
@@ -120,16 +120,17 @@ CREATE TABLE movies (
   studio_id INTEGER
 );
 
-CREATE TABLE actors (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  actor_name TEXT
-);
-
 CREATE TABLE characters (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  character_name TEXT,
-  actor_id INTEGER
+  character_name TEXT
 );
+
+CREATE TABLE actors (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  actor_name TEXT,
+  character_id INTEGER
+);
+
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
@@ -163,49 +164,88 @@ VALUES  (
   (SELECT id from studios WHERE studio_name='Warner Bros.'))  
 ;
 
-INSERT INTO actors (
-  actor_name
+INSERT INTO characters (
+  character_name
 )
 VALUES  (
-  "Christian Bale"
+    "Alfred"
+),
+(
+    "Bane"
+),
+(
+    "John Blake"
+),
+(
+    "Rachel Dawes"
+),
+(
+    "Harvey Dent"
+),
+(
+    "Commissioner Gordon"
+),
+(
+    "Joker"
+),
+(
+    "Selina Kyle"
+),
+(
+    "Ra's Al Ghul"
+),
+(
+    "Bruce Wayne"
+);
+
+INSERT INTO actors (
+  actor_name,
+  character_id
+)
+VALUES  (
+  "Christian Bale",
+  (SELECT id from characters WHERE character_name='Bruce Wayne')
   ),
   (
-  "Michael Caine"
+  "Michael Caine",
+  (SELECT id from characters WHERE character_name='Alfred')
   ),
   (
-  "Aaron Eckhart"
+  "Aaron Eckhart",
+  (SELECT id from characters WHERE character_name='Harvey Dent')
   ),
 (
-  "Joseph Gordon-Levitt"
+  "Joseph Gordon-Levitt",
+  (SELECT id from characters WHERE character_name='John Blake')
   ),
   (
-  "Maggie Gyllenhaal"
+  "Maggie Gyllenhaal",
+  (SELECT id from characters WHERE character_name='Rachel Dawes')
   ),
   (
-  "Tom Hardy"
+  "Tom Hardy",
+  (SELECT id from characters WHERE character_name='Bane')
   ),
   (
-  "Anne Hathaway"
+  "Anne Hathaway",
+  (SELECT id from characters WHERE character_name='Selina Kyle')
   ),
   (
-  "Katie Holmes"
+  "Katie Holmes",
+  (SELECT id from characters WHERE character_name='Rachel Dawes')
   ),
   (
-  "Heath Ledger"
+  "Heath Ledger",
+  (SELECT id from characters WHERE character_name='Joker')
   ),
   (
-  "Liam Neeson"
+  "Liam Neeson",
+  (SELECT id from characters WHERE character_name="Ra's Al Ghul")
   ),
   (
-  "Gary Oldman"
+  "Gary Oldman",
+  (SELECT id from characters WHERE character_name='Commissioner Gordon')
   );
-
-  INSERT INTO characters (
-  character_name,
-  actor_id
-)
-VALUES  (
-    ""
 
 -- Prints a header for the movies output
 .print "Movies"
