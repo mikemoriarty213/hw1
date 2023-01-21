@@ -354,8 +354,4 @@ ON movies.studio_id = studios.id
 
 
 -- The SQL statement for the cast output
-SELECT cast.id, movies.title
-FROM cast
-INNER JOIN movies
-ON cast.movie_id = movies.id
-;
+
