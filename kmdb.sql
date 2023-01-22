@@ -102,9 +102,8 @@
 -- Drop existing tables, so you'll start fresh each time this script is run.
 DROP TABLE IF EXISTS studios;
 DROP TABLE IF EXISTS movies;
-DROP TABLE IF EXISTS characters;
 DROP TABLE IF EXISTS actors;
-DROP TABLE IF EXISTS cast;
+DROP TABLE IF EXISTS roles;
 
 -- Create new tables, according to your domain model
 
@@ -121,21 +120,16 @@ CREATE TABLE movies (
   studio_id INTEGER
 );
 
-CREATE TABLE characters (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  character_name TEXT
-);
-
 CREATE TABLE actors (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  actor_name TEXT,
-  character_id INTEGER
+  actor_name TEXT
 );
 
-CREATE TABLE cast (
+CREATE TABLE roles (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   movie_id INTEGER,
-  actor_id INTEGER
+  actor_id INTEGER,
+  role TEXT
 );
 
 
@@ -171,166 +165,136 @@ VALUES  (
   (SELECT id from studios WHERE studio_name='Warner Bros.'))  
 ;
 
-INSERT INTO characters (
-  character_name
-)
-VALUES  (
-    "Alfred"
-),
-(
-    "Bane"
-),
-(
-    "John Blake"
-),
-(
-    "Rachel Dawes"
-),
-(
-    "Harvey Dent"
-),
-(
-    "Commissioner Gordon"
-),
-(
-    "Joker"
-),
-(
-    "Selina Kyle"
-),
-(
-    "Ra's Al Ghul"
-),
-(
-    "Bruce Wayne"
-);
-
 INSERT INTO actors (
-  actor_name,
-  character_id
+  actor_name
 )
 VALUES  (
-  "Christian Bale",
-  (SELECT id from characters WHERE character_name='Bruce Wayne')
+  "Christian Bale"
   ),
   (
-  "Michael Caine",
-  (SELECT id from characters WHERE character_name='Alfred')
+  "Michael Caine"
   ),
   (
-  "Aaron Eckhart",
-  (SELECT id from characters WHERE character_name='Harvey Dent')
+  "Aaron Eckhart"
   ),
 (
-  "Joseph Gordon-Levitt",
-  (SELECT id from characters WHERE character_name='John Blake')
+  "Joseph Gordon-Levitt"
   ),
   (
-  "Maggie Gyllenhaal",
-  (SELECT id from characters WHERE character_name='Rachel Dawes')
+  "Maggie Gyllenhaal"
   ),
   (
-  "Tom Hardy",
-  (SELECT id from characters WHERE character_name='Bane')
+  "Tom Hardy"
   ),
   (
-  "Anne Hathaway",
-  (SELECT id from characters WHERE character_name='Selina Kyle')
+  "Anne Hathaway"
   ),
   (
-  "Katie Holmes",
-  (SELECT id from characters WHERE character_name='Rachel Dawes')
+  "Katie Holmes"
   ),
   (
-  "Heath Ledger",
-  (SELECT id from characters WHERE character_name='Joker')
+  "Heath Ledger"
   ),
   (
-  "Liam Neeson",
-  (SELECT id from characters WHERE character_name="Ra's Al Ghul")
+  "Liam Neeson"
   ),
   (
-  "Gary Oldman",
-  (SELECT id from characters WHERE character_name='Commissioner Gordon')
+  "Gary Oldman"
   );
 
-  INSERT INTO cast (
+  INSERT INTO roles ( 
   movie_id,
-  actor_id
+  actor_id,
+  role
 )
 VALUES  (
   (SELECT id from movies WHERE title='Batman Begins'),
-  (SELECT id from actors WHERE actor_name='Christian Bale')
+  (SELECT id from actors WHERE actor_name='Christian Bale'),
+  "Bruce Wayne"
 )
 ,
  (
   (SELECT id from movies WHERE title='Batman Begins'),
-  (SELECT id from actors WHERE actor_name='Michael Caine')
+  (SELECT id from actors WHERE actor_name='Michael Caine'),
+  "Alfred"
  )
   ,
   (
   (SELECT id from movies WHERE title='Batman Begins'),
-  (SELECT id from actors WHERE actor_name='Liam Neeson')
+  (SELECT id from actors WHERE actor_name='Liam Neeson'),
+  "Ra's Al Ghul"
   )
   ,
   (
   (SELECT id from movies WHERE title='Batman Begins'),
-  (SELECT id from actors WHERE actor_name='Katie Holmes')
+  (SELECT id from actors WHERE actor_name='Katie Holmes'),
+  "Rachel Dawes"
   )
   ,
   (
   (SELECT id from movies WHERE title='Batman Begins'),
-  (SELECT id from actors WHERE actor_name='Gary Oldman')
+  (SELECT id from actors WHERE actor_name='Gary Oldman'),
+  "Commissioner Gordon"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight'),
-  (SELECT id from actors WHERE actor_name='Christian Bale')
+  (SELECT id from actors WHERE actor_name='Christian Bale'),
+  "Bruce Wayne"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight'),
-  (SELECT id from actors WHERE actor_name='Heath Ledger')
+  (SELECT id from actors WHERE actor_name='Heath Ledger'),
+   "Joker"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight'),
-  (SELECT id from actors WHERE actor_name='Aaron Eckhart')
+  (SELECT id from actors WHERE actor_name='Aaron Eckhart'),
+  "Harvey Dent"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight'),
-  (SELECT id from actors WHERE actor_name='Michael Caine')
+  (SELECT id from actors WHERE actor_name='Michael Caine'),
+  "Alfred"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight'),
-  (SELECT id from actors WHERE actor_name='Maggie Gyllenhaal')
+  (SELECT id from actors WHERE actor_name='Maggie Gyllenhaal'),
+  "Rachel Dawes"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight Rises'),
-  (SELECT id from actors WHERE actor_name='Christian Bale')
+  (SELECT id from actors WHERE actor_name='Christian Bale'),
+  "Bruce Wayne"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight Rises'),
-  (SELECT id from actors WHERE actor_name='Gary Oldman')
+  (SELECT id from actors WHERE actor_name='Gary Oldman'),
+  "Commissioner Gordon"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight Rises'),
-  (SELECT id from actors WHERE actor_name='Tom Hardy')
+  (SELECT id from actors WHERE actor_name='Tom Hardy'),
+  "Bane"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight Rises'),
-  (SELECT id from actors WHERE actor_name='Joseph Gordon-Levitt')
+  (SELECT id from actors WHERE actor_name='Joseph Gordon-Levitt'),
+  "John Blake"
   )
   ,
   (
   (SELECT id from movies WHERE title='The Dark Knight Rises'),
-  (SELECT id from actors WHERE actor_name='Anne Hathaway')
+  (SELECT id from actors WHERE actor_name='Anne Hathaway'),
+  "Selina Kyle"
 )
   ;
 
@@ -354,4 +318,10 @@ ON movies.studio_id = studios.id
 
 
 -- The SQL statement for the cast output
-
+SELECT movies.title, actors.actor_name, roles.role
+FROM roles
+INNER JOIN movies
+ON roles.movie_id = movies.id
+INNER JOIN actors
+ON roles.actor_id = actors.id
+;
